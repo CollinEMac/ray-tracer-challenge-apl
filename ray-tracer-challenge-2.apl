@@ -27,11 +27,15 @@ canvas[3;4]← ⊂color 1 0 0
 ⍝ Create a ppm header
 ppm_header←{⍪'P3' (⍺, ⍵) '255'}
 
+clamped_color←{
+    ⌊0.5+((color ⍵ × 255) ⌊ 255) ⌈ 0
+}
+
 ⍝ construct a ppm
 canvas1← 3 5 ⍴ ⊂color 0 0 0
-canvas1[1;1]← ⊂color 1.5 0 0
-canvas1[2;3]← ⊂color 0 0.5 0
-canvas1[2;5]← ⊂color -0.5 0 1
+canvas1[1;1]← ⊂clamped_color 1.5 0 0
+canvas1[2;3]← ⊂clamped_color 0 0.5 0
+canvas1[3;5]← ⊂clamped_color ¯0.5 0 1
 ppm← ⍪(5 ppm_header 3) canvas1 
 
 ⎕←ppm
